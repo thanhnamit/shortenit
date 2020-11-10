@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/thanhnamit/shortenit/api-shortenit-v1/alias"
 	tracing "github.com/thanhnamit/shortenit/api-shortenit-v1/infra/tracing"
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/model"
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/user"
@@ -59,6 +60,12 @@ func handleRedirectURL(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleCreateURL(w http.ResponseWriter, r *http.Request) {
+	// create span with global named context
+	ctx := r.Context()
+	tr := global.Tracer("api-shortenit-v1")
+	ctx, span := tr.Start(ctx, "main.create-url")
+	defer span.End()
+
 	dec := json.NewDecoder(r.Body)
 	var req model.ShortenURLRequest
 	err := dec.Decode(&req)
@@ -67,8 +74,25 @@ func handleCreateURL(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	//
-	toJSON(req, w)
+
+	// call alias provider service
+	key, err := alias.GetNewAlias(ctx)
+	if err != nil {
+		log.Fatalf("Unable to invoke alias service: %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	// call customer service
+	_, err = userRepo.GetAllUsers(ctx)
+	if err != nil {
+		span.AddEvent(ctx, "db.error", label.String("message", err.Error()))
+		log.Fatal(err)
+	}
+
+	toJSON(&model.ShortenURLResponse{
+		URL: key,
+	}, w)
 }
 
 func handleDeleteURL(w http.ResponseWriter, r *http.Request) {

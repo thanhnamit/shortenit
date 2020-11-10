@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package v1;
+
+option java_multiple_files = true;
+option java_package = "com.github.thanhnamit.shortenit.proto.alias.v1";
+option java_outer_classname = "AliasProto";
+option go_package = "github.com/thanhnamit/shortenit/grpc-alias-provider-v1/proto/alias/v1";
+
+service AliasProviderService {
+    rpc GetNewAlias(GetNewAliasRequest) returns (GetNewAliasResponse) {}
+    rpc CheckAliasValidity(CheckAliasValidityRequest) returns (CheckAliasValidityResponse) {}
+}
+
+message GetNewAliasRequest {
+
+}
+
+message GetNewAliasResponse {
+    string alias = 1;
+    fixed64 timestamp = 2;
+}
+
+message CheckAliasValidityRequest {
+    string alias = 1;
+}
+
+message CheckAliasValidityResponse {
+    bool valid = 1;
+}
