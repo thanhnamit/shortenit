@@ -25,3 +25,21 @@ docker run -d --name jaeger \
   -p 9411:9411 \
   jaegertracing/all-in-one:1.20
 ```
+
+run redis
+
+```sh
+docker run --name keydb-redis -p 6379:6379 -d redis
+```
+
+generate keys
+
+```sh
+grpcurl -plaintext -d '{"numberOfKeys":100}' localhost:50051 v1.AliasProviderService/GenerateAlias
+```
+
+check available service
+
+```sh
+grpcurl -plaintext localhost:50051 list
+```

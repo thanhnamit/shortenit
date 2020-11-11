@@ -3,6 +3,8 @@ module github.com/thanhnamit/shortenit/grpc-alias-provider-v1
 go 1.15
 
 require (
+	github.com/go-redis/redis/extra/redisotel v0.1.2
+	github.com/go-redis/redis/v8 v8.3.3
 	github.com/golang/protobuf v1.4.3
 	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.13.0
 	go.opentelemetry.io/otel v0.13.0

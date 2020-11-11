@@ -10,11 +10,10 @@ option go_package = "github.com/thanhnamit/shortenit/grpc-alias-provider-v1/prot
 service AliasProviderService {
     rpc GetNewAlias(GetNewAliasRequest) returns (GetNewAliasResponse) {}
     rpc CheckAliasValidity(CheckAliasValidityRequest) returns (CheckAliasValidityResponse) {}
+    rpc GenerateAlias(GenerateAliasRequest) returns (GenerateAliasResponse) {}
 }
 
-message GetNewAliasRequest {
-
-}
+message GetNewAliasRequest {}
 
 message GetNewAliasResponse {
     string alias = 1;
@@ -27,4 +26,13 @@ message CheckAliasValidityRequest {
 
 message CheckAliasValidityResponse {
     bool valid = 1;
+    bool used = 2;
+}
+
+message GenerateAliasRequest {
+    int32 numberOfKeys = 1;
+}
+
+message GenerateAliasResponse {
+    bool completed = 1;
 }

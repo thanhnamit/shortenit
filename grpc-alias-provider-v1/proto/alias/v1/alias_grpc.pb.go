@@ -19,6 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 type AliasProviderServiceClient interface {
 	GetNewAlias(ctx context.Context, in *GetNewAliasRequest, opts ...grpc.CallOption) (*GetNewAliasResponse, error)
 	CheckAliasValidity(ctx context.Context, in *CheckAliasValidityRequest, opts ...grpc.CallOption) (*CheckAliasValidityResponse, error)
+	GenerateAlias(ctx context.Context, in *GenerateAliasRequest, opts ...grpc.CallOption) (*GenerateAliasResponse, error)
 }
 
 type aliasProviderServiceClient struct {
@@ -47,12 +48,22 @@ func (c *aliasProviderServiceClient) CheckAliasValidity(ctx context.Context, in 
 	return out, nil
 }
 
+func (c *aliasProviderServiceClient) GenerateAlias(ctx context.Context, in *GenerateAliasRequest, opts ...grpc.CallOption) (*GenerateAliasResponse, error) {
+	out := new(GenerateAliasResponse)
+	err := c.cc.Invoke(ctx, "/v1.AliasProviderService/GenerateAlias", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AliasProviderServiceServer is the server API for AliasProviderService service.
 // All implementations must embed UnimplementedAliasProviderServiceServer
 // for forward compatibility
 type AliasProviderServiceServer interface {
 	GetNewAlias(context.Context, *GetNewAliasRequest) (*GetNewAliasResponse, error)
 	CheckAliasValidity(context.Context, *CheckAliasValidityRequest) (*CheckAliasValidityResponse, error)
+	GenerateAlias(context.Context, *GenerateAliasRequest) (*GenerateAliasResponse, error)
 	mustEmbedUnimplementedAliasProviderServiceServer()
 }
 
@@ -65,6 +76,9 @@ func (UnimplementedAliasProviderServiceServer) GetNewAlias(context.Context, *Get
 }
 func (UnimplementedAliasProviderServiceServer) CheckAliasValidity(context.Context, *CheckAliasValidityRequest) (*CheckAliasValidityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckAliasValidity not implemented")
+}
+func (UnimplementedAliasProviderServiceServer) GenerateAlias(context.Context, *GenerateAliasRequest) (*GenerateAliasResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GenerateAlias not implemented")
 }
 func (UnimplementedAliasProviderServiceServer) mustEmbedUnimplementedAliasProviderServiceServer() {}
 
@@ -115,6 +129,24 @@ func _AliasProviderService_CheckAliasValidity_Handler(srv interface{}, ctx conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AliasProviderService_GenerateAlias_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GenerateAliasRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AliasProviderServiceServer).GenerateAlias(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.AliasProviderService/GenerateAlias",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AliasProviderServiceServer).GenerateAlias(ctx, req.(*GenerateAliasRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _AliasProviderService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "v1.AliasProviderService",
 	HandlerType: (*AliasProviderServiceServer)(nil),
@@ -126,6 +158,10 @@ var _AliasProviderService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CheckAliasValidity",
 			Handler:    _AliasProviderService_CheckAliasValidity_Handler,
+		},
+		{
+			MethodName: "GenerateAlias",
+			Handler:    _AliasProviderService_GenerateAlias_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
