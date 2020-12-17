@@ -13,17 +13,15 @@ import (
 	"go.opentelemetry.io/otel/label"
 )
 
-
-
-// Repository ...
-type Repository struct {
+// UserRepo ...
+type UserRepo struct {
 	cfg 	   *config.Config
 	db         *mongo.Client
 	collection *mongo.Collection
 }
 
 // NewUserRepository ...
-func NewUserRepository(ctx context.Context, cfg *config.Config) *Repository {
+func NewUserRepository(ctx context.Context, cfg *config.Config) *UserRepo {
 	db, err := mongo.NewClient(options.Client().ApplyURI(cfg.MongoCon))
 	if err != nil {
 		log.Fatal(err)
@@ -39,31 +37,33 @@ func NewUserRepository(ctx context.Context, cfg *config.Config) *Repository {
 		log.Fatal(err)
 	}
 
-	return &Repository{
+	return &UserRepo{
 		cfg: cfg,
 		db:         db,
 		collection: db.Database("gotel").Collection("users"),
 	}
 }
 
-func (r Repository) SaveUser(ctx context.Context, user *core.User) error {
+func (r *UserRepo) SaveUser(ctx context.Context, user *core.User) error {
 	tr := global.Tracer(r.cfg.TracerName)
 	_, span := tr.Start(ctx, "repository.user.SaveUser")
 	defer span.End()
 	span.SetAttributes(label.String("mongodb.operation", "UpdateOne"))
 
-	ur, err := r.collection.UpdateOne(ctx, bson.M{"_id": bson.M{"$eq": user.ID}}, user)
+	filter := bson.D{{"_id", user.ID}}
+	update := bson.D{{"$set", bson.D{{"aliases", user.Aliases}}}}
+	ur, err := r.collection.UpdateOne(ctx, filter, update, options.Update().SetUpsert(true))
 	if err != nil {
 		span.AddEvent(ctx, "mongodb.error", label.String("message", err.Error()))
 		return err
 	}
 
-	span.AddEvent(ctx, "mongodb.upsertcount", label.Int("count", int(ur.UpsertedCount)))
+	span.AddEvent(ctx, "mongodb.update", label.Int("count", int(ur.ModifiedCount)))
 	return nil
 }
 
 // GetUserByEmail ...
-func (r Repository) GetUserByEmail(ctx context.Context, email string) (*core.User, error) {
+func (r *UserRepo) GetUserByEmail(ctx context.Context, email string) (*core.User, error) {
 	tr := global.Tracer(r.cfg.TracerName)
 	_, span := tr.Start(ctx, "repository.user.GetUserByEmail")
 	defer span.End()
@@ -76,18 +76,18 @@ func (r Repository) GetUserByEmail(ctx context.Context, email string) (*core.Use
 		return nil, sr.Err()
 	}
 
-	err := sr.Decode(user)
+	err := sr.Decode(&user)
 	if err != nil {
 		span.AddEvent(ctx, "decode.error", label.String("message", err.Error()))
 		return nil, err
 	}
 
-	span.AddEvent(ctx, "mongodb.userfound", label.Int("id", len(user.ID)))
+	span.AddEvent(ctx, "mongodb.userfound", label.String("id", user.ID.String()))
 	return &user, nil
 }
 
 // GetAllUsers ...
-func (r Repository) GetAllUsers(ctx context.Context) ([]*core.User, error) {
+func (r *UserRepo) GetAllUsers(ctx context.Context) ([]*core.User, error) {
 	tr := global.Tracer(r.cfg.TracerName)
 	_, span := tr.Start(ctx, "repository.user.GetAllUsers")
 	defer span.End()
@@ -125,12 +125,12 @@ func (r Repository) GetAllUsers(ctx context.Context) ([]*core.User, error) {
 }
 
 // CreateUser ...
-func (r Repository) CreateUser(ctx context.Context, user *core.User) error {
+func (r *UserRepo) CreateUser(ctx context.Context, user *core.User) error {
 	_, err := r.collection.InsertOne(ctx, user)
 	return err
 }
 
 // Close ...
-func (r Repository) Close(ctx context.Context) {
+func (r *UserRepo) Close(ctx context.Context) {
 	r.db.Disconnect(ctx)
 }

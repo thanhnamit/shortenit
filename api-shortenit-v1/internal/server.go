@@ -12,6 +12,7 @@ import (
 type Server struct {
 	cfg      *config.Config
 	userRepo core.UserRepository
+	aliasRepo core.AliasRepository
 	aliasSvc core.AliasService
 }
 
@@ -25,11 +26,13 @@ func NewServer(cfg *config.Config) *Server {
 	platform.InitTracer(cfg.TracerName, cfg.TraceCollector)
 	ctx := context.Background()
 	userRepo := NewUserRepository(ctx, cfg)
+	aliasRepo := NewAliasRepository(ctx, cfg)
 	aliasSvc := NewAliasClient(cfg)
 
 	return &Server{
 		cfg,
 		userRepo,
+		aliasRepo,
 		aliasSvc,
 	}
 }

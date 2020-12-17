@@ -16,21 +16,24 @@ func TestNewAlias(t *testing.T) {
 	mAliasSvc.On("GetNewAlias", mock.Anything).Return("test", nil)
 
 	mRepo := new(MockUserRepository)
-	mRepo.On("GetAllUsers", mock.Anything).Return([]*core.User{
-		{
-			ID:        primitive.NewObjectID(),
-			Name:      "Nam",
-			Email:     "t",
-			CreatedAt: time.Time{},
-			LastLogin: time.Time{},
-		},
-	}, nil)
+	mRepo.On("GetUserByEmail", mock.Anything, mock.Anything).Return(&core.User{
+		ID:        primitive.NewObjectID(),
+		Name:      "abc",
+		Email:     "abc@test.com",
+		CreatedAt: time.Now(),
+		LastLogin: time.Now(),
+		Aliases:   []core.Alias{},
+	})
+	mRepo.On("SaveUser", mock.Anything, mock.Anything).Return(nil)
 
-	svc := NewService(mAliasSvc, mRepo, &config.Config{})
-	res, err := svc.NewAlias(context.TODO(), core.ShortenURLRequest{
+	aRepo := new(MockAliasRepository)
+	aRepo.On("SaveAlias", mock.Anything, mock.Anything).Return(nil)
+
+	svc := NewService(mAliasSvc, mRepo, aRepo, &config.Config{})
+	res, err := svc.GetNewAlias(context.TODO(), core.ShortenURLRequest{
 		OriginalURL: "http://test.decmo",
 		CustomAlias: "",
-		UserEmail:   "",
+		UserEmail:   "abc@test.com",
 	})
 
 	t.Logf("Test 0:\tShould return response object")
@@ -55,22 +58,39 @@ type MockUserRepository struct {
 	mock.Mock
 }
 
+func (m *MockUserRepository) SaveUser(ctx context.Context, user *core.User) error {
+	args := m.Called(ctx, user)
+	return args.Error(0)
+}
+
 func (m *MockUserRepository) CreateUser(ctx context.Context, user *core.User) error {
 	return nil
 }
 
-func (m MockUserRepository) Close(ctx context.Context) {
+func (m *MockUserRepository) Close(ctx context.Context) {
 	return
 }
 
-func (m MockUserRepository) GetAllUsers(ctx context.Context) ([]*core.User, error) {
+func (m *MockUserRepository) GetAllUsers(ctx context.Context) ([]*core.User, error) {
 	args := m.Called(ctx)
 	return args.Get(0).([]*core.User), args.Error(1)
 }
 
-func (m MockUserRepository) GetUserByEmail(ctx context.Context, email string) *core.User {
+func (m *MockUserRepository) GetUserByEmail(ctx context.Context, email string) (*core.User, error) {
 	args := m.Called(ctx, email)
-	return args.Get(0).(*core.User)
+	return args.Get(0).(*core.User), nil
 }
 
+type MockAliasRepository struct {
+	mock.Mock
+}
 
+func (r *MockAliasRepository) GetAliasByKey(ctx context.Context, alias string) (*core.Alias, error) {
+	args := r.Called(ctx, alias)
+	return args.Get(0).(*core.Alias), args.Error(1)
+}
+
+func (r *MockAliasRepository) SaveAlias(ctx context.Context, alias *core.Alias) error {
+	args := r.Called(ctx, alias)
+	return args.Error(0)
+}

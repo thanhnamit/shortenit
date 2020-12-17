@@ -17,11 +17,6 @@ type User struct {
 	Aliases   []Alias			 `bson:"aliases"`
 }
 
-type Alias struct {
-	OriginalURL string `bson:"original_url"`
-	CustomAlias string `bson:"custom_alias"`
-	CreatedAt time.Time `bson:"created_at"`
-}
 
 type UserRepository interface {
 	CreateUser(ctx context.Context, user *User) error
@@ -30,5 +25,7 @@ type UserRepository interface {
 	GetAllUsers(ctx context.Context) ([]*User, error)
 	GetUserByEmail(ctx context.Context, email string) (*User, error)
 }
+
+
 
 

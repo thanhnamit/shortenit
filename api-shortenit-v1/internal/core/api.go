@@ -11,3 +11,5 @@ type ShortenURLRequest struct {
 type ShortenURLResponse struct {
 	URL string `json:"url,omitempty"`
 }
+
+type URLResponse ShortenURLResponse
