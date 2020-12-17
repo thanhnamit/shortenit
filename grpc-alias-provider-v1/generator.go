@@ -13,7 +13,7 @@ func init() {
 
 var letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-// RandKey generate random key
+// RandKey generates random key
 func RandKey(length int) string {
 	b := make([]byte, length)
 	for i := range b {

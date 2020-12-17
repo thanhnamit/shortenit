@@ -1,6 +1,12 @@
 # Api shorten an url
 
-## Todo
+## Planning & Todo
+
+1. Refine api-shortenit-v1 project (add unit test, restructure, apply best practice, dockerise)
+2. Refine grpc project (dockerise)
+3. Implement other aspects of observability (export metrics, global trace id, asynchronous tracing)
+4. Build and deploy the stack on AWS EKS, utilise AWS Distro Collector
+5. Start thinking about writing blog
 
 ## Design
 

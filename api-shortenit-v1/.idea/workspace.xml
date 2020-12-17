@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ce8161e8-cd50-4a23-8779-a275b27f4135" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/api-shortenit-v1.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/alias_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/config/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/core/alias.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/core/service.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/core/user.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/handler.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/platform/middlewares.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/router.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/server.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/service.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/service_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../grpc-alias-provider-v1/.idea/aws.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../grpc-alias-provider-v1/.idea/grpc-alias-provider-v1.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alias/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/alias.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/infra/tracing/init.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/platform/tracing.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/core/url.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto/alias/v1/alias.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/proto/alias/v1/alias.pb.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto/alias/v1/alias.proto" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/proto/alias/v1/alias.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto/alias/v1/alias_grpc.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/proto/alias/v1/alias_grpc.pb.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../grpc-alias-provider-v1/generator.go" beforeDir="false" afterPath="$PROJECT_DIR$/../grpc-alias-provider-v1/generator.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../grpc-alias-provider-v1/infra/tracing/init.go" beforeDir="false" afterPath="$PROJECT_DIR$/../grpc-alias-provider-v1/internal/tracing/init.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../grpc-alias-provider-v1/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/../grpc-alias-provider-v1/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../grpc-alias-provider-v1/proto/alias/v1/alias.proto" beforeDir="false" afterPath="$PROJECT_DIR$/../grpc-alias-provider-v1/proto/alias/v1/alias.proto" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" url="file:///usr/local/Cellar/go/1.15.5/libexec" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="false" />
+  </component>
+  <component name="ProjectId" id="1lDmNEGKtxlnAvO5IJt0vYiJJXd" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="go.sdk.automatically.set" value="true" />
+    <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/pkg" />
+      <recent name="$PROJECT_DIR$/internal/core" />
+      <recent name="$PROJECT_DIR$/internal" />
+      <recent name="$PROJECT_DIR$/internal/platform" />
+      <recent name="$PROJECT_DIR$/internal/clients" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Go Test.TestNewAlias in github.com/thanhnamit/shortenit/api-shortenit-v1/internal">
+    <configuration name="TestGetNewAlias in github.com/thanhnamit/shortenit/api-shortenit-v1/internal" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="api-shortenit-v1" />
+      <working_directory value="$PROJECT_DIR$/internal" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/thanhnamit/shortenit/api-shortenit-v1/internal" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^\QTestGetNewAlias\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestNewAlias in github.com/thanhnamit/shortenit/api-shortenit-v1/internal" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="api-shortenit-v1" />
+      <working_directory value="$PROJECT_DIR$/internal" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/thanhnamit/shortenit/api-shortenit-v1/internal" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^\QTestNewAlias\E$" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Test.TestNewAlias in github.com/thanhnamit/shortenit/api-shortenit-v1/internal" />
+        <item itemvalue="Go Test.TestGetNewAlias in github.com/thanhnamit/shortenit/api-shortenit-v1/internal" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VgoProject">
+    <integration-enabled>true</integration-enabled>
+  </component>
+</project>

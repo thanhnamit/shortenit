@@ -1,17 +1,20 @@
-package tracing
+package platform
 
 import (
 	"log"
 
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/api/global"
 	"go.opentelemetry.io/otel/exporters/trace/jaeger"
 	otellabel "go.opentelemetry.io/otel/label"
+	"go.opentelemetry.io/otel/propagators"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 )
 
 // InitTracer ...
-func InitTracer(serviceName string) func() {
+func InitTracer(serviceName string, traceCollector string) func() {
 	flush, err := jaeger.InstallNewPipeline(
-		jaeger.WithCollectorEndpoint("http://localhost:14268/api/traces"),
+		jaeger.WithCollectorEndpoint(traceCollector),
 		jaeger.WithProcess(jaeger.Process{
 			ServiceName: serviceName,
 			Tags: []otellabel.KeyValue{
@@ -23,5 +26,6 @@ func InitTracer(serviceName string) func() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	global.SetTextMapPropagator(otel.NewCompositeTextMapPropagator(propagators.TraceContext{}, propagators.Baggage{}))
 	return flush
 }
