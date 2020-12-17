@@ -2,18 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ce8161e8-cd50-4a23-8779-a275b27f4135" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/alias.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/alias.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/core/alias.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/core/alias.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/core/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/core/service.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/core/url.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/core/api.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/core/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/core/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/platform/middlewares.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/platform/middlewares.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/server.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/service.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/service_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/service_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../grpc-alias-provider-v1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../grpc-alias-provider-v1/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
