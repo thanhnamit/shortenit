@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="00853d05-b579-41d4-9775-31acdc2d9aea" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../api-shortenit-v1/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../api-shortenit-v1/api-shortenit-v1" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../api-shortenit-v1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../api-shortenit-v1/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api-shortenit-v1/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/../api-shortenit-v1/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api-shortenit-v1/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/../api-shortenit-v1/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api-shortenit-v1/internal/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/../api-shortenit-v1/internal/config/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api-shortenit-v1/internal/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/../api-shortenit-v1/internal/handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api-shortenit-v1/internal/platform/middlewares.go" beforeDir="false" afterPath="$PROJECT_DIR$/../api-shortenit-v1/internal/platform/middlewares.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api-shortenit-v1/internal/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/../api-shortenit-v1/internal/server.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api-shortenit-v1/internal/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/../api-shortenit-v1/internal/service.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api-shortenit-v1/internal/service_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/../api-shortenit-v1/internal/service_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api-shortenit-v1/api-shortenit-v1" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
