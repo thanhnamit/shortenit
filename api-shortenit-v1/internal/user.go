@@ -24,17 +24,17 @@ type UserRepo struct {
 func NewUserRepository(ctx context.Context, cfg *config.Config) *UserRepo {
 	db, err := mongo.NewClient(options.Client().ApplyURI(cfg.MongoCon))
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	err = db.Connect(ctx)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	err = db.Ping(ctx, nil)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	return &UserRepo{

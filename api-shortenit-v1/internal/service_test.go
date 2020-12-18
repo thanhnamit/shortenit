@@ -6,6 +6,7 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/config"
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/core"
+	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/platform"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"testing"
 	"time"
@@ -30,7 +31,8 @@ func TestNewAlias(t *testing.T) {
 	aRepo.On("SaveAlias", mock.Anything, mock.Anything).Return(nil)
 
 	svc := NewService(mAliasSvc, mRepo, aRepo, &config.Config{})
-	res, err := svc.GetNewAlias(context.TODO(), core.ShortenURLRequest{
+	ctx := context.WithValue(context.Background(), platform.ContextKey(platform.CtxBasePath), "http://localhost:8085/shortenit")
+	res, err := svc.GetNewAlias(ctx, core.ShortenURLRequest{
 		OriginalURL: "http://test.decmo",
 		CustomAlias: "",
 		UserEmail:   "abc@test.com",
@@ -41,7 +43,7 @@ func TestNewAlias(t *testing.T) {
 		mAliasSvc.AssertExpectations(t)
 		mRepo.AssertExpectations(t)
 		assert.Nil(t, err)
-		assert.Equal(t, "test", res.URL)
+		assert.Equal(t, "http://localhost:8085/shortenit/test", res.URL)
 	}
 }
 

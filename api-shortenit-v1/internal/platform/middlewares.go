@@ -2,12 +2,14 @@ package platform
 
 import (
 	"context"
+	"fmt"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 	"net/http"
 )
 
 const (
 	CtxApiKeyName = "api-key"
+	CtxBasePath = "base-path"
 )
 
 type ContextKey string
@@ -25,7 +27,8 @@ func NewHealthHandler() func(w http.ResponseWriter, r *http.Request) {
 
 func toHandlerFunc(next http.Handler) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		next.ServeHTTP(w, r)
+		ctx := context.WithValue(r.Context(), ContextKey(CtxBasePath), fmt.Sprintf("http://%s%s", r.Host, r.URL.Path))
+		next.ServeHTTP(w, r.WithContext(ctx))
 	}
 }
 

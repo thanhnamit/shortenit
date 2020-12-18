@@ -35,7 +35,7 @@ func NewAliasClient(cfg *config.Config) *AliasClient {
 	conn, err := grpc.DialContext(context.Background(), cfg.AliasCon, grpc.WithInsecure(), grpc.WithBlock(), grpc.WithUnaryInterceptor(otelgrpc.UnaryClientInterceptor()))
 
 	if err != nil {
-		log.Fatalf("Could not connect to alias service: %v", err)
+		log.Printf("Could not connect to alias service: %v", err)
 	}
 
 	return &AliasClient{
@@ -52,7 +52,7 @@ func (ac *AliasClient) GetNewAlias(ctx context.Context) (string, error) {
 	client := pb.NewAliasProviderServiceClient(ac.conn)
 	res, err := client.GetNewAlias(ctx, &pb.GetNewAliasRequest{})
 	if err != nil {
-		log.Fatalf("Could not invoke GetNewAlias: %v", err)
+		log.Printf("Could not invoke GetNewAlias: %v", err)
 		return "", err
 	}
 
@@ -80,17 +80,17 @@ func (ac *AliasClient) injectMetadata(ctx context.Context) context.Context {
 func NewAliasRepository(ctx context.Context, cfg *config.Config) *AliasRepo {
 	db, err := mongo.NewClient(options.Client().ApplyURI(cfg.MongoCon))
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	err = db.Connect(ctx)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	err = db.Ping(ctx, nil)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	return &AliasRepo{

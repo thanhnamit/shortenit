@@ -2,8 +2,10 @@ package internal
 
 import (
 	"context"
+	"fmt"
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/config"
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/core"
+	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/platform"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.opentelemetry.io/otel/api/global"
 	"go.opentelemetry.io/otel/label"
@@ -26,7 +28,7 @@ func (d DefaultService) GetNewAlias(ctx context.Context, request core.ShortenURL
 	key, err := d.aliasSvc.GetNewAlias(ctx)
 	if err != nil {
 		span.AddEvent(ctx, "service.alias.error", label.String("message", err.Error()))
-		log.Fatalf("Error invoking alias service: %v", err)
+		log.Printf("Error invoking alias service: %v", err)
 		return core.ShortenURLResponse{}, err
 	}
 
@@ -41,7 +43,7 @@ func (d DefaultService) GetNewAlias(ctx context.Context, request core.ShortenURL
 
 	if err != nil {
 		span.AddEvent(ctx, "service.alias.error", label.String("message", err.Error()))
-		log.Fatalf("Error saving alias: %v", err)
+		log.Printf("Error saving alias: %v", err)
 		return core.ShortenURLResponse{}, err
 	}
 
@@ -50,7 +52,7 @@ func (d DefaultService) GetNewAlias(ctx context.Context, request core.ShortenURL
 		user, err := d.userRepo.GetUserByEmail(ctx, request.UserEmail)
 		if err != nil {
 			span.AddEvent(ctx, "repository.user.error", label.String("message", err.Error()))
-			log.Fatalf("Error getting user: %v", err)
+			log.Printf("Error getting user: %v", err)
 			return core.ShortenURLResponse{}, err
 		}
 
@@ -66,7 +68,7 @@ func (d DefaultService) GetNewAlias(ctx context.Context, request core.ShortenURL
 	}
 
 	return core.ShortenURLResponse{
-		URL: key,
+		URL: makeUrl(ctx, key),
 	}, nil
 }
 
@@ -78,9 +80,14 @@ func (d DefaultService) GetUrl(ctx context.Context, alias string) (string, error
 	url, err := d.aliasRepo.GetAliasByKey(ctx, alias)
 	if err != nil {
 		span.AddEvent(ctx, "service.alias.error", label.String("message", err.Error()))
-		log.Fatalf("Error getting url by alias: %v\n", err)
+		log.Printf("Error getting url by alias: %v\n", err)
 	}
 	return url.OriginalURL, err
+}
+
+
+func makeUrl(ctx context.Context, key string) string {
+	return fmt.Sprintf("%s/%s", ctx.Value(platform.ContextKey(platform.CtxBasePath)), key)
 }
 
 func NewService(alias core.AliasService, userRepo core.UserRepository, aliasRepo core.AliasRepository, cfg *config.Config) core.Service {
@@ -91,3 +98,4 @@ func NewService(alias core.AliasService, userRepo core.UserRepository, aliasRepo
 		cfg,
 	}
 }
+

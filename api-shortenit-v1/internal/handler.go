@@ -3,6 +3,8 @@ package internal
 import (
 	"encoding/json"
 	"github.com/gorilla/mux"
+
+	//"github.com/gorilla/mux"
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/core"
 	"io"
 	"log"
@@ -16,13 +18,14 @@ func CreateAliasHandler(s *Server) http.Handler {
 		var req core.ShortenURLRequest
 		err := dec.Decode(&req)
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
+
 		res, err := svc.GetNewAlias(r.Context(), req)
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
@@ -39,7 +42,7 @@ func GetUrlHandler(s *Server) http.Handler {
 		url, err := svc.GetUrl(r.Context(), vars["alias"])
 
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}

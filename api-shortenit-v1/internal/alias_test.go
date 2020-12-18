@@ -37,7 +37,7 @@ func dialer() func(context.Context, string) (net.Conn, error) {
 
 	go func() {
 		if err := server.Serve(listener); err != nil {
-			log.Fatal(err)
+			log.Println(err)
 		}
 	}()
 
@@ -49,7 +49,7 @@ func dialer() func(context.Context, string) (net.Conn, error) {
 func NewTestAliasClient(cfg *config.Config) *AliasClient {
 	conn, err := grpc.DialContext(context.Background(), cfg.AliasCon, grpc.WithInsecure(), grpc.WithContextDialer(dialer()), grpc.WithBlock(), grpc.WithUnaryInterceptor(otelgrpc.UnaryClientInterceptor()))
 	if err != nil {
-		log.Fatalf("Could not connect to alias service: %v", err)
+		log.Printf("Could not connect to alias service: %v", err)
 	}
 
 	return &AliasClient{

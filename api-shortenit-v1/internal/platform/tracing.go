@@ -24,7 +24,7 @@ func InitTracer(serviceName string, traceCollector string) func() {
 		jaeger.WithSDK(&sdktrace.Config{DefaultSampler: sdktrace.AlwaysSample()}),
 	)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	global.SetTextMapPropagator(otel.NewCompositeTextMapPropagator(propagators.TraceContext{}, propagators.Baggage{}))
 	return flush

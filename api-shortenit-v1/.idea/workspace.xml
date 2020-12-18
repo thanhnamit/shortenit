@@ -2,15 +2,33 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ce8161e8-cd50-4a23-8779-a275b27f4135" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api-shortenit-v1" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/alias.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/alias.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/alias_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/alias_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/platform/middlewares.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/platform/middlewares.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/platform/tracing.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/platform/tracing.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/server.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/service_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/service_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../grpc-alias-provider-v1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../grpc-alias-provider-v1/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DockerExecCommand">
+    <ExecCommand>
+      <option name="command" value="/bin/bash" />
+      <option name="imageId" value="1e8a5a8c20d3" />
+    </ExecCommand>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -35,6 +53,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
@@ -50,6 +69,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="Docker" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -60,7 +80,7 @@
       <recent name="$PROJECT_DIR$/internal/clients" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Build.go build github.com/thanhnamit/shortenit/api-shortenit-v1">
+  <component name="RunManager" selected="Docker.DockerApiDev">
     <configuration name="go build github.com/thanhnamit/shortenit/api-shortenit-v1" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="api-shortenit-v1" />
       <working_directory value="$PROJECT_DIR$" />
@@ -101,10 +121,68 @@
       <filePath value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
+    <configuration name="DockerApiDev" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="imageTag" value="api-shortenit-v1" />
+          <option name="buildCliOptions" value="" />
+          <option name="command" value="" />
+          <option name="containerName" value="api-shortenit-v1" />
+          <option name="entrypoint" value="" />
+          <option name="envVars">
+            <list>
+              <DockerEnvVarImpl>
+                <option name="name" value="APP_NAME" />
+                <option name="value" value="api-shortenit-v1" />
+              </DockerEnvVarImpl>
+              <DockerEnvVarImpl>
+                <option name="name" value="TRACER_NAME" />
+                <option name="value" value="api-shortenit-v1" />
+              </DockerEnvVarImpl>
+              <DockerEnvVarImpl>
+                <option name="name" value="TRACER_COLLECTOR" />
+                <option name="value" value="http://host.docker.internal:14268/api/traces" />
+              </DockerEnvVarImpl>
+              <DockerEnvVarImpl>
+                <option name="name" value="ALIAS_CON" />
+                <option name="value" value="host.docker.internal:50051" />
+              </DockerEnvVarImpl>
+              <DockerEnvVarImpl>
+                <option name="name" value="MONGO_CON" />
+                <option name="value" value="mongodb://host.docker.internal:27017/" />
+              </DockerEnvVarImpl>
+              <DockerEnvVarImpl>
+                <option name="name" value="PORT" />
+                <option name="value" value="8085" />
+              </DockerEnvVarImpl>
+            </list>
+          </option>
+          <option name="portBindings">
+            <list>
+              <DockerPortBindingImpl>
+                <option name="containerPort" value="8085" />
+                <option name="hostPort" value="8085" />
+              </DockerPortBindingImpl>
+            </list>
+          </option>
+          <option name="commandLineOptions" value="" />
+          <option name="sourceFilePath" value="Dockerfile" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Docker.DockerApiDev" />
+      <item itemvalue="Go Build.go build github.com/thanhnamit/shortenit/api-shortenit-v1" />
+      <item itemvalue="Go Test.go test github.com/thanhnamit/shortenit/api-shortenit-v1/internal" />
+      <item itemvalue="Go Test.TestGetNewAlias in github.com/thanhnamit/shortenit/api-shortenit-v1/internal" />
+      <item itemvalue="Go Test.TestNewAlias in github.com/thanhnamit/shortenit/api-shortenit-v1/internal" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Build.go build github.com/thanhnamit/shortenit/api-shortenit-v1" />
+        <item itemvalue="Docker.DockerApiDev" />
         <item itemvalue="Go Test.go test github.com/thanhnamit/shortenit/api-shortenit-v1/internal" />
+        <item itemvalue="Go Build.go build github.com/thanhnamit/shortenit/api-shortenit-v1" />
         <item itemvalue="Go Test.TestNewAlias in github.com/thanhnamit/shortenit/api-shortenit-v1/internal" />
         <item itemvalue="Go Test.TestGetNewAlias in github.com/thanhnamit/shortenit/api-shortenit-v1/internal" />
       </list>
@@ -113,6 +191,9 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
