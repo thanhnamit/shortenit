@@ -3,7 +3,9 @@ package internal
 import (
 	"encoding/json"
 	"github.com/gorilla/mux"
-
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/label"
+	"go.opentelemetry.io/otel/metric"
 	//"github.com/gorilla/mux"
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/core"
 	"io"
@@ -13,6 +15,8 @@ import (
 
 func CreateAliasHandler(s *Server) http.Handler {
 	svc := NewService(s.aliasSvc, s.userRepo, s.aliasRepo, s.cfg)
+	meter := otel.Meter("api-shortenit-v1")
+
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		dec := json.NewDecoder(r.Body)
 		var req core.ShortenURLRequest
@@ -22,6 +26,8 @@ func CreateAliasHandler(s *Server) http.Handler {
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
+
+		recordMetrics(meter, r, req)
 
 		res, err := svc.GetNewAlias(r.Context(), req)
 		if err != nil {
@@ -33,6 +39,11 @@ func CreateAliasHandler(s *Server) http.Handler {
 		w.WriteHeader(http.StatusOK)
 		toResponse(res, w)
 	})
+}
+
+func recordMetrics(meter metric.Meter, r *http.Request, req core.ShortenURLRequest) {
+	counter := metric.Must(meter).NewInt64Counter("api-shortenit-v1.create-alias.request-size.total")
+	meter.RecordBatch(r.Context(), []label.KeyValue{}, counter.Measurement(req.Size()))
 }
 
 func GetUrlHandler(s *Server) http.Handler {

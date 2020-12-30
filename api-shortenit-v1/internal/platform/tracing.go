@@ -1,13 +1,12 @@
 package platform
 
 import (
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/propagation"
 	"log"
 
-	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/api/global"
 	"go.opentelemetry.io/otel/exporters/trace/jaeger"
 	otellabel "go.opentelemetry.io/otel/label"
-	"go.opentelemetry.io/otel/propagators"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 )
 
@@ -26,6 +25,6 @@ func InitTracer(serviceName string, traceCollector string) func() {
 	if err != nil {
 		log.Println(err)
 	}
-	global.SetTextMapPropagator(otel.NewCompositeTextMapPropagator(propagators.TraceContext{}, propagators.Baggage{}))
+	otel.SetTextMapPropagator(propagation.NewCompositeTextMapPropagator(propagation.TraceContext{}, propagation.Baggage{}))
 	return flush
 }

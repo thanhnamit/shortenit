@@ -26,6 +26,7 @@ const (
 	availableAliasSet = "available_alias_set"
 	usedAliasSet      = "used_alias_set"
 	appName           = "grpc-alias-provider-v1"
+	redisHost		  = "localhost:6379"
 )
 
 // aliasProviderServer ...
@@ -37,7 +38,7 @@ type server struct {
 func (s *server) GetNewAlias(ctx context.Context, in *pb.GetNewAliasRequest) (*pb.GetNewAliasResponse, error) {
 	log.Println("Received GetNewAlias request")
 
-	// extract metdata from grpc context
+	// extract metadata from grpc context
 	requestMetadata, _ := metadata.FromIncomingContext(ctx)
 	log.Printf("Metadata: %v\n", requestMetadata)
 
@@ -124,7 +125,7 @@ func main() {
 
 	// create new redis client
 	rdb := redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379",
+		Addr:     redisHost,
 		Password: "",
 		DB:       0,
 	})

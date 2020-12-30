@@ -7,8 +7,9 @@ import (
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/core"
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/platform"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.opentelemetry.io/otel/api/global"
+	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/label"
+	"go.opentelemetry.io/otel/trace"
 	"log"
 	"time"
 )
@@ -21,13 +22,13 @@ type DefaultService struct {
 }
 
 func (d DefaultService) GetNewAlias(ctx context.Context, request core.ShortenURLRequest) (core.ShortenURLResponse, error) {
-	tr := global.Tracer(d.cfg.TracerName)
+	tr := otel.Tracer(d.cfg.TracerName)
 	ctx, span := tr.Start(ctx, "service.GetNewAlias")
 	defer span.End()
 
 	key, err := d.aliasSvc.GetNewAlias(ctx)
 	if err != nil {
-		span.AddEvent(ctx, "service.alias.error", label.String("message", err.Error()))
+		span.AddEvent("service.alias.error", trace.WithAttributes(label.String("message", err.Error())))
 		log.Printf("Error invoking alias service: %v", err)
 		return core.ShortenURLResponse{}, err
 	}
@@ -42,7 +43,7 @@ func (d DefaultService) GetNewAlias(ctx context.Context, request core.ShortenURL
 	})
 
 	if err != nil {
-		span.AddEvent(ctx, "service.alias.error", label.String("message", err.Error()))
+		span.AddEvent("service.alias.error", trace.WithAttributes(label.String("message", err.Error())))
 		log.Printf("Error saving alias: %v", err)
 		return core.ShortenURLResponse{}, err
 	}
@@ -51,7 +52,7 @@ func (d DefaultService) GetNewAlias(ctx context.Context, request core.ShortenURL
 	if request.UserEmail != "" {
 		user, err := d.userRepo.GetUserByEmail(ctx, request.UserEmail)
 		if err != nil {
-			span.AddEvent(ctx, "repository.user.error", label.String("message", err.Error()))
+			span.AddEvent("repository.GetUserByEmail.error", trace.WithAttributes(label.String("message", err.Error())))
 			log.Printf("Error getting user: %v", err)
 			return core.ShortenURLResponse{}, err
 		}
@@ -64,7 +65,12 @@ func (d DefaultService) GetNewAlias(ctx context.Context, request core.ShortenURL
 			CreatedAt:   time.Now(),
 		})
 
-		d.userRepo.SaveUser(ctx, user)
+		err = d.userRepo.SaveUser(ctx, user)
+		if err != nil {
+			span.AddEvent("repository.SaveUser.error", trace.WithAttributes(label.String("message", err.Error())))
+			log.Printf("Error saving user: %v", err)
+			return core.ShortenURLResponse{}, err
+		}
 	}
 
 	return core.ShortenURLResponse{
@@ -73,13 +79,13 @@ func (d DefaultService) GetNewAlias(ctx context.Context, request core.ShortenURL
 }
 
 func (d DefaultService) GetUrl(ctx context.Context, alias string) (string, error) {
-	tr := global.Tracer(d.cfg.TracerName)
+	tr := otel.Tracer(d.cfg.TracerName)
 	ctx, span := tr.Start(ctx, "service.GetUrl")
 	defer span.End()
 
 	url, err := d.aliasRepo.GetAliasByKey(ctx, alias)
 	if err != nil {
-		span.AddEvent(ctx, "service.alias.error", label.String("message", err.Error()))
+		span.AddEvent("service.alias.error", trace.WithAttributes(label.String("message", err.Error())))
 		log.Printf("Error getting url by alias: %v\n", err)
 	}
 	return url.OriginalURL, err

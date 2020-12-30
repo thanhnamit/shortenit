@@ -13,3 +13,7 @@ type ShortenURLResponse struct {
 }
 
 type URLResponse ShortenURLResponse
+
+func (r *ShortenURLRequest) Size() int64 {
+	return int64(len(r.CustomAlias) + len(r.OriginalURL) + len(r.UserEmail))
+}

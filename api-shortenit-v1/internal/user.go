@@ -4,12 +4,13 @@ import (
 	"context"
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/config"
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/core"
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/trace"
 	"log"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"go.opentelemetry.io/otel/api/global"
 	"go.opentelemetry.io/otel/label"
 )
 
@@ -45,7 +46,7 @@ func NewUserRepository(ctx context.Context, cfg *config.Config) *UserRepo {
 }
 
 func (r *UserRepo) SaveUser(ctx context.Context, user *core.User) error {
-	tr := global.Tracer(r.cfg.TracerName)
+	tr := otel.Tracer(r.cfg.TracerName)
 	_, span := tr.Start(ctx, "repository.user.SaveUser")
 	defer span.End()
 	span.SetAttributes(label.String("mongodb.operation", "UpdateOne"))
@@ -54,17 +55,17 @@ func (r *UserRepo) SaveUser(ctx context.Context, user *core.User) error {
 	update := bson.D{{"$set", bson.D{{"aliases", user.Aliases}}}}
 	ur, err := r.collection.UpdateOne(ctx, filter, update, options.Update().SetUpsert(true))
 	if err != nil {
-		span.AddEvent(ctx, "mongodb.error", label.String("message", err.Error()))
+		span.AddEvent("mongodb.error", trace.WithAttributes(label.String("message", err.Error())))
 		return err
 	}
 
-	span.AddEvent(ctx, "mongodb.update", label.Int("count", int(ur.ModifiedCount)))
+	span.AddEvent("mongodb.update", trace.WithAttributes(label.Int("count", int(ur.ModifiedCount))))
 	return nil
 }
 
 // GetUserByEmail ...
 func (r *UserRepo) GetUserByEmail(ctx context.Context, email string) (*core.User, error) {
-	tr := global.Tracer(r.cfg.TracerName)
+	tr := otel.Tracer(r.cfg.TracerName)
 	_, span := tr.Start(ctx, "repository.user.GetUserByEmail")
 	defer span.End()
 	span.SetAttributes(label.String("mongodb.operation", "FindOne"))
@@ -72,23 +73,23 @@ func (r *UserRepo) GetUserByEmail(ctx context.Context, email string) (*core.User
 	var user core.User
 	sr := r.collection.FindOne(ctx, bson.M{"email": email})
 	if sr.Err() != nil {
-		span.AddEvent(ctx, "mongodb.notfound", label.String("message", sr.Err().Error()))
+		span.AddEvent("mongodb.notfound", trace.WithAttributes(label.String("message", sr.Err().Error())))
 		return nil, sr.Err()
 	}
 
 	err := sr.Decode(&user)
 	if err != nil {
-		span.AddEvent(ctx, "decode.error", label.String("message", err.Error()))
+		span.AddEvent("decode.error", trace.WithAttributes(label.String("message", err.Error())))
 		return nil, err
 	}
 
-	span.AddEvent(ctx, "mongodb.userfound", label.String("id", user.ID.String()))
+	span.AddEvent("mongodb.userfound", trace.WithAttributes(label.String("id", user.ID.String())))
 	return &user, nil
 }
 
 // GetAllUsers ...
 func (r *UserRepo) GetAllUsers(ctx context.Context) ([]*core.User, error) {
-	tr := global.Tracer(r.cfg.TracerName)
+	tr := otel.Tracer(r.cfg.TracerName)
 	_, span := tr.Start(ctx, "repository.user.GetAllUsers")
 	defer span.End()
 	span.SetAttributes(label.String("mongodb.operation", "Find"))
@@ -96,7 +97,7 @@ func (r *UserRepo) GetAllUsers(ctx context.Context) ([]*core.User, error) {
 	var users []*core.User
 	cur, err := r.collection.Find(ctx, bson.D{{}})
 	if err != nil {
-		span.AddEvent(ctx, "mongodb.error", label.String("message", err.Error()))
+		span.AddEvent("mongodb.error", trace.WithAttributes(label.String("message", err.Error())))
 		return users, err
 	}
 
@@ -120,7 +121,7 @@ func (r *UserRepo) GetAllUsers(ctx context.Context) ([]*core.User, error) {
 		return users, mongo.ErrNoDocuments
 	}
 
-	span.AddEvent(ctx, "mongodb.ok", label.Int("size", len(users)))
+	span.AddEvent("mongodb.ok", trace.WithAttributes(label.Int("size", len(users))))
 	return users, nil
 }
 

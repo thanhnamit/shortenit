@@ -11,9 +11,9 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
-	"go.opentelemetry.io/otel/api/global"
-	"go.opentelemetry.io/otel/api/trace"
+	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/label"
+	"go.opentelemetry.io/otel/trace"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 	"log"
@@ -101,7 +101,7 @@ func NewAliasRepository(ctx context.Context, cfg *config.Config) *AliasRepo {
 }
 
 func (r *AliasRepo) GetAliasByKey(ctx context.Context, alias string) (*core.Alias, error) {
-	tr := global.Tracer(r.cfg.TracerName)
+	tr := otel.Tracer(r.cfg.TracerName)
 	_, span := tr.Start(ctx, "repository.alias.GetAliasByKey")
 	defer span.End()
 	span.SetAttributes(label.String("mongodb.operation", "FindOne"))
@@ -110,26 +110,29 @@ func (r *AliasRepo) GetAliasByKey(ctx context.Context, alias string) (*core.Alia
 	sr := r.collection.FindOne(ctx, bson.M{"alias": alias})
 
 	if sr.Err() != nil {
-		span.AddEvent(ctx, "mongodb.notfound", label.String("message", sr.Err().Error()))
+		span.AddEvent("mongodb.notfound", trace.WithAttributes(label.String("message", sr.Err().Error())))
 		return nil, sr.Err()
 	}
 
 	err := sr.Decode(&al)
 	if err != nil {
-		span.AddEvent(ctx, "decode.error", label.String("message", err.Error()))
+		span.AddEvent("decode.error", trace.WithAttributes(label.String("message", err.Error())))
 		return nil, err
 	}
 
-	span.AddEvent(ctx, "mongodb.aliasfound", label.String("id", al.ID.String()))
+	span.AddEvent("mongodb.aliasfound", trace.WithAttributes(label.String("id", al.ID.String())))
 	return &al, nil
 }
 
 func (r *AliasRepo) SaveAlias(ctx context.Context, alias *core.Alias) error {
-	tr := global.Tracer(r.cfg.TracerName)
+	tr := otel.Tracer(r.cfg.TracerName)
 	_, span := tr.Start(ctx, "repository.user.SaveAlias")
 	defer span.End()
 	span.SetAttributes(label.String("mongodb.operation", "InsertOne"))
 	re, err := r.collection.InsertOne(ctx, alias)
-	span.AddEvent(ctx, "mongodb.insert", label.String("id", fmt.Sprintf("%v", re.InsertedID)))
-	return err
+	if err != nil {
+		return err
+	}
+	span.AddEvent("mongodb.insert", trace.WithAttributes(label.String("id", fmt.Sprintf("%v", re.InsertedID))))
+	return nil
 }
