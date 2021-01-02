@@ -30,7 +30,7 @@ func TestNewAlias(t *testing.T) {
 	aRepo := new(MockAliasRepository)
 	aRepo.On("SaveAlias", mock.Anything, mock.Anything).Return(nil)
 
-	svc := NewService(mAliasSvc, mRepo, aRepo, &config.Config{})
+	svc := NewService(mAliasSvc, mRepo, aRepo, nil, &config.Config{})
 	ctx := context.WithValue(context.Background(), platform.ContextKey(platform.CtxBasePath), "http://localhost:8085/shortenit")
 	res, err := svc.GetNewAlias(ctx, core.ShortenURLRequest{
 		OriginalURL: "http://test.decmo",

@@ -8,5 +8,6 @@ import (
 func main() {
 	cfg := config.NewAppConfig()
 	server := internal.NewServer(cfg)
+	go internal.InitKafkaConsumer(cfg)
 	server.Start()
 }

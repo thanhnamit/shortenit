@@ -1,5 +1,13 @@
 version: "3.7"
 services:
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - 9000:9090
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prometheus-data:/prometheus
+    command: --web.enable-lifecycle  --config.file=/etc/prometheus/prometheus.yml
   zoo:
     image: zookeeper:3.4.9
     hostname: zoo
@@ -25,3 +33,6 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     depends_on:
       - zoo
+
+volumes:
+  prometheus-data:

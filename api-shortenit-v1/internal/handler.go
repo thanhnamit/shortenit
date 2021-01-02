@@ -14,7 +14,7 @@ import (
 )
 
 func CreateAliasHandler(s *Server) http.Handler {
-	svc := NewService(s.aliasSvc, s.userRepo, s.aliasRepo, s.cfg)
+	svc := newCoreService(s)
 	meter := otel.Meter("api-shortenit-v1")
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -41,13 +41,9 @@ func CreateAliasHandler(s *Server) http.Handler {
 	})
 }
 
-func recordMetrics(meter metric.Meter, r *http.Request, req core.ShortenURLRequest) {
-	counter := metric.Must(meter).NewInt64Counter("api-shortenit-v1.create-alias.request-size.total")
-	meter.RecordBatch(r.Context(), []label.KeyValue{}, counter.Measurement(req.Size()))
-}
-
 func GetUrlHandler(s *Server) http.Handler {
-	svc := NewService(s.aliasSvc, s.userRepo, s.aliasRepo, s.cfg)
+	svc := newCoreService(s)
+
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 		url, err := svc.GetUrl(r.Context(), vars["alias"])
@@ -63,6 +59,15 @@ func GetUrlHandler(s *Server) http.Handler {
 	})
 }
 
+func recordMetrics(meter metric.Meter, r *http.Request, req core.ShortenURLRequest) {
+	counter := metric.Must(meter).NewInt64Counter("api-shortenit-v1.create-alias.request-size.total")
+	meter.RecordBatch(r.Context(), []label.KeyValue{}, counter.Measurement(req.Size()))
+}
+
+func newCoreService(s *Server) core.Service {
+	svc := NewService(s.aliasSvc, s.userRepo, s.aliasRepo, s.cfg)
+	return svc
+}
 
 func toResponse(data interface{}, w io.Writer) {
 	enc := json.NewEncoder(w)

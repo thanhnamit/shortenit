@@ -15,10 +15,10 @@ import (
 )
 
 type DefaultService struct {
-	aliasSvc core.AliasService
-	userRepo core.UserRepository
+	aliasSvc  core.AliasService
+	userRepo  core.UserRepository
 	aliasRepo core.AliasRepository
-	cfg *config.Config
+	cfg       *config.Config
 }
 
 func (d DefaultService) GetNewAlias(ctx context.Context, request core.ShortenURLRequest) (core.ShortenURLResponse, error) {
@@ -88,9 +88,19 @@ func (d DefaultService) GetUrl(ctx context.Context, alias string) (string, error
 		span.AddEvent("service.alias.error", trace.WithAttributes(label.String("message", err.Error())))
 		log.Printf("Error getting url by alias: %v\n", err)
 	}
+
+	producer := NewKafkaProducer(d.cfg)
+
+	// send event to a message broker
+	producer.Publish(ctx, core.GetUrlEvent{
+		Alias:      	alias,
+		OriginalUrl:  	url.OriginalURL,
+		Success:    true,
+		AccessTime: time.Now(),
+	}, d.cfg.GetUrlTopic)
+
 	return url.OriginalURL, err
 }
-
 
 func makeUrl(ctx context.Context, key string) string {
 	return fmt.Sprintf("%s/%s", ctx.Value(platform.ContextKey(platform.CtxBasePath)), key)
