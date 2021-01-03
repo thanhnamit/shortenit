@@ -5,6 +5,7 @@ import (
 	"go.opentelemetry.io/otel/api/global"
 	"go.opentelemetry.io/otel/propagators"
 	"log"
+	"os"
 
 	"go.opentelemetry.io/otel/exporters/trace/jaeger"
 	otellabel "go.opentelemetry.io/otel/label"
@@ -17,8 +18,14 @@ const (
 
 // InitTracer ...
 func InitTracer(serviceName string) func() {
+
+	url := os.Getenv("TRACER_COLLECTOR")
+	if url == "" {
+		url = jaegerUrl
+	}
+
 	flush, err := jaeger.InstallNewPipeline(
-		jaeger.WithCollectorEndpoint(jaegerUrl),
+		jaeger.WithCollectorEndpoint(url),
 		jaeger.WithProcess(jaeger.Process{
 			ServiceName: serviceName,
 			Tags: []otellabel.KeyValue{

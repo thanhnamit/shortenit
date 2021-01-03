@@ -7,4 +7,4 @@ scrape_configs:
     metrics_path: /metrics
     static_configs:
       - targets:
-          - 'host.docker.internal:2222'
+          - 'api-shortenit-v1:2222'

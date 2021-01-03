@@ -46,27 +46,20 @@ func (s *Server) Start() {
 
 func (s *Server) WaitForInterruptSignal(httpSvc *http.Server) {
 	c := make(chan os.Signal, 1)
+
 	// Accept SIGINT (Ctrl+C)
-	// Ignore SIGKILL, SIGQUIT or SIGTERM (Ctrl+/)
 	signal.Notify(c, os.Interrupt)
 
-	// Block and wait for signal
 	<-c
 
-	// Create a deadline to wait for.
 	ctx, cancel := context.WithTimeout(context.Background(), duration)
 	defer cancel()
 
-	// Doesn't block if no connections, but will otherwise wait
-	// until the timeout deadline.
 	err := httpSvc.Shutdown(ctx)
 	if err != nil {
 		log.Printf("Shutting down error :%v", err)
 	}
 
-	// Optionally, you could run srv.Shutdown in a goroutine and block on
-	// <-ctx.Done() if your application should wait for other services
-	// to finalize based on context cancellation.
 	log.Println("Shutting down")
 	os.Exit(0)
 }

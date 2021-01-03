@@ -1,41 +1,66 @@
-# Api shorten an url
+# Shorten It Apis
 
-## Build and deploy
+A simple stack to play with OpenTelemetry project
 
-run mongo 
+## Build and deploy to docker
 
-`docker run -d -p 27017-27019:27017-27019 --name mongodb mongo:latest`
+Preinstall
 
-run jaeger
+- Docker & Docker compose
+- Grpcurl <https://github.com/fullstorydev/grpcurl>
 
-```sh
-docker run -d --name jaeger \
-  -e COLLECTOR_ZIPKIN_HTTP_PORT=9411 \
-  -p 5775:5775/udp \
-  -p 6831:6831/udp \
-  -p 6832:6832/udp \
-  -p 5778:5778 \
-  -p 16686:16686 \
-  -p 14268:14268 \
-  -p 14250:14250 \
-  -p 9411:9411 \
-  jaegertracing/all-in-one:1.20
+Deploy dependencies
+
+```sh 
+docker-compose up -d zoo kafka prometheus jaeger redisdb mongodb
 ```
 
-run redis
+Make sure all dependencies are running
 
-```sh
-docker run --name keydb-redis -p 6379:6379 -d redis
+Build then deploy main services 
+
+```sh 
+docker-compose up -d grpc-alias-provider-v1 api-shortenit-v1
 ```
 
-generate keys
+Generate alias keys in Redis
 
 ```sh
 grpcurl -plaintext -d '{"numberOfKeys":100}' localhost:50051 v1.AliasProviderService/GenerateAlias
 ```
 
-check available service
+Init sample customer in Mongodb
 
 ```sh
-grpcurl -plaintext localhost:50051 list
+curl http://localhost:8085/init-sample-data
 ```
+
+## Test services
+
+Create alias request
+
+```sh
+curl --location --request POST 'localhost:8085/shortenit' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer test_api_key' \
+--data-raw '{
+    "originUrl": "http://test.com.au/this/is/very/long/url",
+    "userEmail": "john.d@gmail.com"
+}'
+```
+
+Retrieve the original url 
+
+```sh
+curl --location --request GET 'localhost:8085/shortenit/{key}' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer test_api_key'
+```
+
+## Examine traces in Jaeger
+
+`http://localhost:16686/`
+
+## Examine metrics in Prometheus
+
+`http://localhost:9000/`

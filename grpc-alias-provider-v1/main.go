@@ -6,6 +6,7 @@ import (
 	"google.golang.org/grpc/metadata"
 	"log"
 	"net"
+	"os"
 	"time"
 
 	"github.com/go-redis/redis/extra/redisotel"
@@ -124,8 +125,13 @@ func main() {
 	reflection.Register(s)
 
 	// create new redis client
+	host := os.Getenv("REDIS_HOST")
+	if host == "" {
+		host = redisHost
+	}
+
 	rdb := redis.NewClient(&redis.Options{
-		Addr:     redisHost,
+		Addr:     host,
 		Password: "",
 		DB:       0,
 	})

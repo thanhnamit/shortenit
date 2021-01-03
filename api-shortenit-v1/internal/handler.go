@@ -3,9 +3,12 @@ package internal
 import (
 	"encoding/json"
 	"github.com/gorilla/mux"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/label"
 	"go.opentelemetry.io/otel/metric"
+	"time"
+
 	//"github.com/gorilla/mux"
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/core"
 	"io"
@@ -72,4 +75,16 @@ func newCoreService(s *Server) core.Service {
 func toResponse(data interface{}, w io.Writer) {
 	enc := json.NewEncoder(w)
 	enc.Encode(data)
+}
+
+func InitSampleHandler(s *Server) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		s.userRepo.CreateUser(r.Context(), &core.User{
+			ID:        primitive.NewObjectID(),
+			Name:      "John D",
+			Email:     "john.d@gmail.com",
+			CreatedAt: time.Now(),
+		})
+		w.Write([]byte("Done"))
+	}
 }
