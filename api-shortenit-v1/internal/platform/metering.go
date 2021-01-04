@@ -30,7 +30,7 @@ func InitMeter() {
 		}
 
 		_ = http.ListenAndServe(":2222", nil)
-	}()
 
-	fmt.Println("Metric server running on 2222")
+		fmt.Println("Metric server running on :2222")
+	}()
 }

@@ -3,15 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="00853d05-b579-41d4-9775-31acdc2d9aea" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../api-shortenit-v1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../api-shortenit-v1/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api-shortenit-v1/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../api-shortenit-v1/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api-shortenit-v1/internal/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/../api-shortenit-v1/internal/handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api-shortenit-v1/internal/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/../api-shortenit-v1/internal/router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api-shortenit-v1/internal/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/../api-shortenit-v1/internal/server.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api-shortenit-v1/internal/platform/metering.go" beforeDir="false" afterPath="$PROJECT_DIR$/../api-shortenit-v1/internal/platform/metering.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/tracing/init.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/tracing/init.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../prometheus/prometheus.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../prometheus/prometheus.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -3,15 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="ce8161e8-cd50-4a23-8779-a275b27f4135" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/server.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/platform/metering.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/platform/metering.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../grpc-alias-provider-v1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../grpc-alias-provider-v1/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../grpc-alias-provider-v1/internal/tracing/init.go" beforeDir="false" afterPath="$PROJECT_DIR$/../grpc-alias-provider-v1/internal/tracing/init.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../grpc-alias-provider-v1/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/../grpc-alias-provider-v1/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../prometheus/prometheus.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../prometheus/prometheus.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
