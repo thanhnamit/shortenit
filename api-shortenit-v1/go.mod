@@ -17,8 +17,9 @@ require (
 	github.com/shirou/gopsutil v3.20.11+incompatible // indirect
 	github.com/stretchr/testify v1.6.1
 	github.com/xdg/stringprep v1.0.0 // indirect
-	go.mongodb.org/mongo-driver v1.4.3
+	go.mongodb.org/mongo-driver v1.4.4
 	go.opentelemetry.io/contrib/instrumentation/github.com/Shopify/sarama/otelsarama v0.15.1
+	go.opentelemetry.io/contrib/instrumentation/go.mongodb.org/mongo-driver/mongo/otelmongo v0.15.1
 	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.15.0
 	go.opentelemetry.io/contrib/instrumentation/host v0.15.1
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.15.0

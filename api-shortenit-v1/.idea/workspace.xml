@@ -2,8 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ce8161e8-cd50-4a23-8779-a275b27f4135" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/vendor/go.opentelemetry.io/contrib/instrumentation/go.mongodb.org/mongo-driver/mongo/otelmongo/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/go.opentelemetry.io/contrib/instrumentation/go.mongodb.org/mongo-driver/mongo/otelmongo/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/go.opentelemetry.io/contrib/instrumentation/go.mongodb.org/mongo-driver/mongo/otelmongo/db.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/go.opentelemetry.io/contrib/instrumentation/go.mongodb.org/mongo-driver/mongo/otelmongo/doc.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/go.opentelemetry.io/contrib/instrumentation/go.mongodb.org/mongo-driver/mongo/otelmongo/go.mod" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/go.opentelemetry.io/contrib/instrumentation/go.mongodb.org/mongo-driver/mongo/otelmongo/go.sum" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/go.opentelemetry.io/contrib/instrumentation/go.mongodb.org/mongo-driver/mongo/otelmongo/mongo.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/go.opentelemetry.io/contrib/instrumentation/go.mongodb.org/mongo-driver/mongo/otelmongo/peer.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/go.opentelemetry.io/contrib/instrumentation/go.mongodb.org/mongo-driver/mongo/otelmongo/tags.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/platform/metering.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/platform/metering.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/alias.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/alias.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/go.mongodb.org/mongo-driver/bson/bsoncodec/struct_codec.go" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/go.mongodb.org/mongo-driver/bson/bsoncodec/struct_codec.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/go.mongodb.org/mongo-driver/bson/bsonoptions/struct_codec_options.go" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/go.mongodb.org/mongo-driver/bson/bsonoptions/struct_codec_options.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/go.mongodb.org/mongo-driver/bson/doc.go" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/go.mongodb.org/mongo-driver/bson/doc.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/go.mongodb.org/mongo-driver/bson/primitive/decimal.go" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/go.mongodb.org/mongo-driver/bson/primitive/decimal.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/go.mongodb.org/mongo-driver/mongo/collection.go" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/go.mongodb.org/mongo-driver/mongo/collection.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/go.mongodb.org/mongo-driver/mongo/index_view.go" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/go.mongodb.org/mongo-driver/mongo/index_view.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/go.mongodb.org/mongo-driver/mongo/mongo.go" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/go.mongodb.org/mongo-driver/mongo/mongo.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/go.mongodb.org/mongo-driver/mongo/options/insertoptions.go" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/go.mongodb.org/mongo-driver/mongo/options/insertoptions.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/go.mongodb.org/mongo-driver/version/version.go" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/go.mongodb.org/mongo-driver/version/version.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/modules.txt" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/modules.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../grpc-alias-provider-v1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../grpc-alias-provider-v1/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

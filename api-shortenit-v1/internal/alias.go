@@ -10,6 +10,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.opentelemetry.io/contrib/instrumentation/go.mongodb.org/mongo-driver/mongo/otelmongo"
 	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/label"
@@ -78,7 +79,11 @@ func (ac *AliasClient) injectMetadata(ctx context.Context) context.Context {
 
 
 func NewAliasRepository(ctx context.Context, cfg *config.Config) *AliasRepo {
-	db, err := mongo.NewClient(options.Client().ApplyURI(cfg.MongoCon))
+	opts := options.Client()
+	opts.Monitor = otelmongo.NewMonitor(cfg.AppName)
+	opts.ApplyURI(cfg.MongoCon)
+	db, err := mongo.NewClient(opts)
+
 	if err != nil {
 		log.Println(err)
 	}

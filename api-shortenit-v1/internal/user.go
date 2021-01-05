@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/config"
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/core"
+	"go.opentelemetry.io/contrib/instrumentation/go.mongodb.org/mongo-driver/mongo/otelmongo"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/trace"
 	"log"
@@ -23,7 +24,11 @@ type UserRepo struct {
 
 // NewUserRepository ...
 func NewUserRepository(ctx context.Context, cfg *config.Config) *UserRepo {
-	db, err := mongo.NewClient(options.Client().ApplyURI(cfg.MongoCon))
+	opts := options.Client()
+	opts.Monitor = otelmongo.NewMonitor(cfg.AppName)
+	opts.ApplyURI(cfg.MongoCon)
+	db, err := mongo.NewClient(opts)
+
 	if err != nil {
 		log.Println(err)
 	}

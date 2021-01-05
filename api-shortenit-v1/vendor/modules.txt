@@ -126,7 +126,7 @@ github.com/xdg/scram
 # github.com/xdg/stringprep v1.0.0
 ## explicit
 github.com/xdg/stringprep
-# go.mongodb.org/mongo-driver v1.4.3
+# go.mongodb.org/mongo-driver v1.4.4
 ## explicit
 go.mongodb.org/mongo-driver/bson
 go.mongodb.org/mongo-driver/bson/bsoncodec
@@ -165,6 +165,9 @@ go.opentelemetry.io/contrib
 # go.opentelemetry.io/contrib/instrumentation/github.com/Shopify/sarama/otelsarama v0.15.1
 ## explicit
 go.opentelemetry.io/contrib/instrumentation/github.com/Shopify/sarama/otelsarama
+# go.opentelemetry.io/contrib/instrumentation/go.mongodb.org/mongo-driver/mongo/otelmongo v0.15.1
+## explicit
+go.opentelemetry.io/contrib/instrumentation/go.mongodb.org/mongo-driver/mongo/otelmongo
 # go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.15.0
 ## explicit
 go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc
