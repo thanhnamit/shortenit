@@ -52,8 +52,9 @@ func NewUserRepository(ctx context.Context, cfg *config.Config) *UserRepo {
 
 func (r *UserRepo) SaveUser(ctx context.Context, user *core.User) error {
 	tr := otel.Tracer(r.cfg.TracerName)
-	_, span := tr.Start(ctx, "repository.user.SaveUser")
+	ctx, span := tr.Start(ctx, "repository.user.SaveUser")
 	defer span.End()
+
 	span.SetAttributes(label.String("mongodb.operation", "UpdateOne"))
 
 	filter := bson.D{{"_id", user.ID}}
@@ -71,8 +72,9 @@ func (r *UserRepo) SaveUser(ctx context.Context, user *core.User) error {
 // GetUserByEmail ...
 func (r *UserRepo) GetUserByEmail(ctx context.Context, email string) (*core.User, error) {
 	tr := otel.Tracer(r.cfg.TracerName)
-	_, span := tr.Start(ctx, "repository.user.GetUserByEmail")
+	ctx, span := tr.Start(ctx, "repository.user.GetUserByEmail")
 	defer span.End()
+
 	span.SetAttributes(label.String("mongodb.operation", "FindOne"))
 
 	var user core.User
@@ -95,8 +97,9 @@ func (r *UserRepo) GetUserByEmail(ctx context.Context, email string) (*core.User
 // GetAllUsers ...
 func (r *UserRepo) GetAllUsers(ctx context.Context) ([]*core.User, error) {
 	tr := otel.Tracer(r.cfg.TracerName)
-	_, span := tr.Start(ctx, "repository.user.GetAllUsers")
+	ctx, span := tr.Start(ctx, "repository.user.GetAllUsers")
 	defer span.End()
+
 	span.SetAttributes(label.String("mongodb.operation", "Find"))
 
 	var users []*core.User

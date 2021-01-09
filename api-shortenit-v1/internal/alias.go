@@ -23,6 +23,7 @@ import (
 
 type AliasClient struct {
 	conn *grpc.ClientConn
+	cfg 	   *config.Config
 }
 
 // UserRepo ...
@@ -41,11 +42,15 @@ func NewAliasClient(cfg *config.Config) *AliasClient {
 
 	return &AliasClient{
 		conn: conn,
+		cfg: cfg,
 	}
 }
 
 func (ac *AliasClient) GetNewAlias(ctx context.Context) (string, error) {
-	span := trace.SpanFromContext(ctx)
+	tr := otel.Tracer(ac.cfg.TracerName)
+	ctx, span := tr.Start(ctx, "grpc.alias.GetNewAlias")
+	defer span.End()
+
 	log.Printf("Original span info: traceId: %s, spanId: %s\n", span.SpanContext().TraceID.String(), span.SpanContext().SpanID.String())
 
 	ctx = ac.injectMetadata(ctx)
@@ -107,8 +112,9 @@ func NewAliasRepository(ctx context.Context, cfg *config.Config) *AliasRepo {
 
 func (r *AliasRepo) GetAliasByKey(ctx context.Context, alias string) (*core.Alias, error) {
 	tr := otel.Tracer(r.cfg.TracerName)
-	_, span := tr.Start(ctx, "repository.alias.GetAliasByKey")
+	ctx, span := tr.Start(ctx, "repository.alias.GetAliasByKey")
 	defer span.End()
+
 	span.SetAttributes(label.String("mongodb.operation", "FindOne"))
 
 	var al core.Alias
@@ -131,9 +137,11 @@ func (r *AliasRepo) GetAliasByKey(ctx context.Context, alias string) (*core.Alia
 
 func (r *AliasRepo) SaveAlias(ctx context.Context, alias *core.Alias) error {
 	tr := otel.Tracer(r.cfg.TracerName)
-	_, span := tr.Start(ctx, "repository.user.SaveAlias")
+	ctx, span := tr.Start(ctx, "repository.alias.SaveAlias")
 	defer span.End()
+
 	span.SetAttributes(label.String("mongodb.operation", "InsertOne"))
+
 	re, err := r.collection.InsertOne(ctx, alias)
 	if err != nil {
 		return err
