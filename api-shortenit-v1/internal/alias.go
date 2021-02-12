@@ -3,6 +3,9 @@ package internal
 import (
 	"context"
 	"fmt"
+	"log"
+	"time"
+
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/config"
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/core"
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/platform"
@@ -17,18 +20,16 @@ import (
 	"go.opentelemetry.io/otel/trace"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
-	"log"
-	"time"
 )
 
 type AliasClient struct {
 	conn *grpc.ClientConn
-	cfg 	   *config.Config
+	cfg  *config.Config
 }
 
 // UserRepo ...
 type AliasRepo struct {
-	cfg 	   *config.Config
+	cfg        *config.Config
 	db         *mongo.Client
 	collection *mongo.Collection
 }
@@ -42,7 +43,7 @@ func NewAliasClient(cfg *config.Config) *AliasClient {
 
 	return &AliasClient{
 		conn: conn,
-		cfg: cfg,
+		cfg:  cfg,
 	}
 }
 
@@ -82,7 +83,6 @@ func (ac *AliasClient) injectMetadata(ctx context.Context) context.Context {
 	return metadata.NewOutgoingContext(ctx, md)
 }
 
-
 func NewAliasRepository(ctx context.Context, cfg *config.Config) *AliasRepo {
 	opts := options.Client()
 	opts.Monitor = otelmongo.NewMonitor(cfg.AppName)
@@ -104,7 +104,7 @@ func NewAliasRepository(ctx context.Context, cfg *config.Config) *AliasRepo {
 	}
 
 	return &AliasRepo{
-		cfg: cfg,
+		cfg:        cfg,
 		db:         db,
 		collection: db.Database("gotel").Collection("aliases"),
 	}

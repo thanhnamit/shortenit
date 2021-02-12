@@ -2,14 +2,15 @@ package internal
 
 import (
 	"context"
+	"testing"
+	"time"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/config"
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/core"
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/platform"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"testing"
-	"time"
 )
 
 func TestNewAlias(t *testing.T) {

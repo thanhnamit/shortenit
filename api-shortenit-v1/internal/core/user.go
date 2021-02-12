@@ -2,10 +2,10 @@ package core
 
 import (
 	"context"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"time"
-)
 
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
 
 // User ...
 type User struct {
@@ -14,9 +14,8 @@ type User struct {
 	Email     string             `bson:"email"`
 	CreatedAt time.Time          `bson:"created_at"`
 	LastLogin time.Time          `bson:"last_login"`
-	Aliases   []Alias			 `bson:"aliases"`
+	Aliases   []Alias            `bson:"aliases"`
 }
-
 
 type UserRepository interface {
 	CreateUser(ctx context.Context, user *User) error
@@ -25,7 +24,3 @@ type UserRepository interface {
 	GetAllUsers(ctx context.Context) ([]*User, error)
 	GetUserByEmail(ctx context.Context, email string) (*User, error)
 }
-
-
-
-

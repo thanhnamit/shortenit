@@ -2,12 +2,13 @@ package internal
 
 import (
 	"context"
+	"log"
+
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/config"
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/core"
 	"go.opentelemetry.io/contrib/instrumentation/go.mongodb.org/mongo-driver/mongo/otelmongo"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/trace"
-	"log"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -17,7 +18,7 @@ import (
 
 // UserRepo ...
 type UserRepo struct {
-	cfg 	   *config.Config
+	cfg        *config.Config
 	db         *mongo.Client
 	collection *mongo.Collection
 }
@@ -44,7 +45,7 @@ func NewUserRepository(ctx context.Context, cfg *config.Config) *UserRepo {
 	}
 
 	return &UserRepo{
-		cfg: cfg,
+		cfg:        cfg,
 		db:         db,
 		collection: db.Database("gotel").Collection("users"),
 	}

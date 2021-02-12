@@ -3,13 +3,14 @@ package platform
 import (
 	"context"
 	"fmt"
-	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 	"net/http"
+
+	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 )
 
 const (
 	CtxApiKeyName = "api-key"
-	CtxBasePath = "base-path"
+	CtxBasePath   = "base-path"
 )
 
 type ContextKey string
@@ -55,4 +56,3 @@ func withAPIKey(next http.Handler) http.Handler {
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
-

@@ -10,9 +10,8 @@ type EventEmitter interface {
 }
 
 type GetUrlEvent struct {
-	Alias string
+	Alias       string
 	OriginalUrl string
-	Success bool
-	AccessTime time.Time
+	Success     bool
+	AccessTime  time.Time
 }
-

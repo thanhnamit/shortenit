@@ -3,18 +3,19 @@ package internal
 import (
 	"context"
 	"encoding/json"
+	"log"
+
 	"github.com/Shopify/sarama"
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/config"
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/core"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/Shopify/sarama/otelsarama"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/codes"
-	"log"
 )
 
 type KafkaProducer struct {
 	producer sarama.AsyncProducer
-	cfg 	   *config.Config
+	cfg      *config.Config
 }
 
 func (ep KafkaProducer) Publish(ctx context.Context, event core.GetUrlEvent, topic string) {
@@ -27,9 +28,9 @@ func (ep KafkaProducer) Publish(ctx context.Context, event core.GetUrlEvent, top
 	log.Println("Publishing event to topic: ", ep.cfg.GetUrlTopic)
 
 	msg := sarama.ProducerMessage{
-		Topic:     topic,
-		Key:       nil,
-		Value:     sarama.StringEncoder(json),
+		Topic: topic,
+		Key:   nil,
+		Value: sarama.StringEncoder(json),
 	}
 
 	otel.GetTextMapPropagator().Inject(ctx, otelsarama.NewProducerMessageCarrier(&msg))
@@ -67,6 +68,6 @@ func NewKafkaProducer(config *config.Config) KafkaProducer {
 
 	return KafkaProducer{
 		producer: producer,
-		cfg: config,
+		cfg:      config,
 	}
 }

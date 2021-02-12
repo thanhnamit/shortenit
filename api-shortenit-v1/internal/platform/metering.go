@@ -2,12 +2,13 @@ package platform
 
 import (
 	"fmt"
-	"go.opentelemetry.io/contrib/instrumentation/host"
-	"go.opentelemetry.io/contrib/instrumentation/runtime"
-	"go.opentelemetry.io/otel/exporters/metric/prometheus"
 	"log"
 	"net/http"
 	"time"
+
+	"go.opentelemetry.io/contrib/instrumentation/host"
+	"go.opentelemetry.io/contrib/instrumentation/runtime"
+	"go.opentelemetry.io/otel/exporters/metric/prometheus"
 )
 
 // InitMeter ...

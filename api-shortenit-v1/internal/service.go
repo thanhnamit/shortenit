@@ -3,6 +3,9 @@ package internal
 import (
 	"context"
 	"fmt"
+	"log"
+	"time"
+
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/config"
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/core"
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/platform"
@@ -10,8 +13,6 @@ import (
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/label"
 	"go.opentelemetry.io/otel/trace"
-	"log"
-	"time"
 )
 
 type DefaultService struct {
@@ -59,7 +60,7 @@ func (d DefaultService) GetNewAlias(ctx context.Context, request core.ShortenURL
 
 		// update user
 		user.Aliases = append(user.Aliases, core.Alias{
-			Alias: key,
+			Alias:       key,
 			OriginalURL: request.OriginalURL,
 			CustomAlias: request.CustomAlias,
 			CreatedAt:   time.Now(),
@@ -93,10 +94,10 @@ func (d DefaultService) GetUrl(ctx context.Context, alias string) (string, error
 
 	// send event to a message broker
 	producer.Publish(ctx, core.GetUrlEvent{
-		Alias:      	alias,
-		OriginalUrl:  	url.OriginalURL,
-		Success:    true,
-		AccessTime: time.Now(),
+		Alias:       alias,
+		OriginalUrl: url.OriginalURL,
+		Success:     true,
+		AccessTime:  time.Now(),
 	}, d.cfg.GetUrlTopic)
 
 	return url.OriginalURL, err
@@ -114,4 +115,3 @@ func NewService(alias core.AliasService, userRepo core.UserRepository, aliasRepo
 		cfg,
 	}
 }
-

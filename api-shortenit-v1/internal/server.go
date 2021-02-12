@@ -2,24 +2,25 @@ package internal
 
 import (
 	"context"
-	"github.com/gorilla/handlers"
-	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/config"
-	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/core"
-	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/platform"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
 	"time"
+
+	"github.com/gorilla/handlers"
+	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/config"
+	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/core"
+	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/platform"
 )
 
 const duration = time.Second * 15
 
 type Server struct {
-	cfg      *config.Config
-	userRepo core.UserRepository
+	cfg       *config.Config
+	userRepo  core.UserRepository
 	aliasRepo core.AliasRepository
-	aliasSvc core.AliasService
+	aliasSvc  core.AliasService
 }
 
 func (s *Server) Start() {

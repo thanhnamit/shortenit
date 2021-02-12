@@ -1,21 +1,22 @@
 package config
 
 import (
-	"github.com/joho/godotenv"
 	"log"
 	"os"
 	"strings"
+
+	"github.com/joho/godotenv"
 )
 
 type Config struct {
-	AppName string
-	TracerName string
+	AppName        string
+	TracerName     string
 	TraceCollector string
-	AliasCon string
-	MongoCon string
-	Port string
-	BrokerList []string
-	GetUrlTopic string
+	AliasCon       string
+	MongoCon       string
+	Port           string
+	BrokerList     []string
+	GetUrlTopic    string
 }
 
 func NewAppConfig() *Config {
@@ -26,14 +27,13 @@ func NewAppConfig() *Config {
 	}
 
 	return &Config{
-		AppName: os.Getenv("APP_NAME"),
-		TracerName: os.Getenv("TRACER_NAME"),
+		AppName:        os.Getenv("APP_NAME"),
+		TracerName:     os.Getenv("TRACER_NAME"),
 		TraceCollector: os.Getenv("TRACER_COLLECTOR"),
-		AliasCon: os.Getenv("ALIAS_CON"),
-		MongoCon: os.Getenv("MONGO_CON"),
-		Port: os.Getenv("PORT"),
-		BrokerList: strings.Split(os.Getenv("KAFKA_PEERS"), ","),
-		GetUrlTopic: os.Getenv("GETURL_EVENT_TOPIC"),
+		AliasCon:       os.Getenv("ALIAS_CON"),
+		MongoCon:       os.Getenv("MONGO_CON"),
+		Port:           os.Getenv("PORT"),
+		BrokerList:     strings.Split(os.Getenv("KAFKA_PEERS"), ","),
+		GetUrlTopic:    os.Getenv("GETURL_EVENT_TOPIC"),
 	}
 }
-

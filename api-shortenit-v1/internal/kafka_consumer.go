@@ -2,13 +2,14 @@ package internal
 
 import (
 	"context"
+	"log"
+
 	"github.com/Shopify/sarama"
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/config"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/Shopify/sarama/otelsarama"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/semconv"
 	"go.opentelemetry.io/otel/trace"
-	"log"
 )
 
 type Consumer struct {

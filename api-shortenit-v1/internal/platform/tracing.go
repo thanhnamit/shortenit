@@ -1,9 +1,10 @@
 package platform
 
 import (
+	"log"
+
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/propagation"
-	"log"
 
 	"go.opentelemetry.io/otel/exporters/trace/jaeger"
 	otellabel "go.opentelemetry.io/otel/label"

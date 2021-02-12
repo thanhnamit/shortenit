@@ -2,6 +2,10 @@ package internal
 
 import (
 	"context"
+	"log"
+	"net"
+	"testing"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/config"
 	pb "github.com/thanhnamit/shortenit/api-shortenit-v1/pkg/proto/alias/v1"
@@ -10,9 +14,6 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/grpc/test/bufconn"
-	"log"
-	"net"
-	"testing"
 )
 
 type mockAliasServer struct {
@@ -31,7 +32,7 @@ func (*mockAliasServer) CheckAliasValidity(context.Context, *pb.CheckAliasValidi
 }
 
 func dialer() func(context.Context, string) (net.Conn, error) {
-	listener := bufconn.Listen(1024*1024)
+	listener := bufconn.Listen(1024 * 1024)
 	server := grpc.NewServer()
 	pb.RegisterAliasProviderServiceServer(server, &mockAliasServer{})
 

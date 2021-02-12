@@ -4,6 +4,23 @@
     <list default="true" id="ce8161e8-cd50-4a23-8779-a275b27f4135" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/alias.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/alias.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/alias_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/alias_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/core/alias.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/core/alias.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/core/api.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/core/api.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/core/event.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/core/event.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/core/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/core/service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/core/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/core/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/handler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/kafka_consumer.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/kafka_consumer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/kafka_producer.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/kafka_producer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/platform/metering.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/platform/metering.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/platform/middlewares.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/platform/middlewares.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/platform/tracing.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/platform/tracing.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/router.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/server.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/service_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/service_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/user.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../grpc-alias-provider-v1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../grpc-alias-provider-v1/.idea/workspace.xml" afterDir="false" />
     </list>
@@ -25,7 +42,7 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" url="file:///usr/local/Cellar/go/1.15.6/libexec" />
+  <component name="GOROOT" url="file:///usr/local/Cellar/go/1.15.7_1/libexec" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>

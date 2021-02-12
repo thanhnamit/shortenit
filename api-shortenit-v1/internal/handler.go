@@ -2,18 +2,20 @@ package internal
 
 import (
 	"encoding/json"
+	"time"
+
 	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/label"
 	"go.opentelemetry.io/otel/metric"
-	"time"
 
-	//"github.com/gorilla/mux"
-	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/core"
 	"io"
 	"log"
 	"net/http"
+
+	//"github.com/gorilla/mux"
+	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/core"
 )
 
 func CreateAliasHandler(s *Server) http.Handler {

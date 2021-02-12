@@ -1,9 +1,10 @@
 package internal
 
 import (
+	"net/http"
+
 	"github.com/gorilla/mux"
 	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/platform"
-	"net/http"
 )
 
 type Router struct {
@@ -18,4 +19,3 @@ func NewRouter(s *Server) *Router {
 	r.HandleFunc("/health", platform.NewHealthHandler())
 	return &Router{Handler: r}
 }
-
