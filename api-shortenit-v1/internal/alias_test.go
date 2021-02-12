@@ -55,12 +55,13 @@ func NewTestAliasClient(cfg *config.Config) *AliasClient {
 
 	return &AliasClient{
 		conn: conn,
+		cfg:  cfg,
 	}
 }
 
 func TestGetNewAlias(t *testing.T) {
 	ctx := context.Background()
-	client := NewTestAliasClient(&config.Config{AliasCon: ""})
+	client := NewTestAliasClient(&config.Config{AliasCon: "", TracerName: ""})
 	response, _ := client.GetNewAlias(ctx)
 	assert.Equal(t, "121212", response, "Not equal")
 }
