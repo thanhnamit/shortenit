@@ -1,11 +1,11 @@
 package tracing
 
 import (
-	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/api/global"
-	"go.opentelemetry.io/otel/propagators"
 	"log"
 	"os"
+
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/propagation"
 
 	"go.opentelemetry.io/otel/exporters/trace/jaeger"
 	otellabel "go.opentelemetry.io/otel/label"
@@ -39,6 +39,6 @@ func InitTracer(serviceName string) func() {
 	}
 
 	// required for trace context to be propagated
-	global.SetTextMapPropagator(otel.NewCompositeTextMapPropagator(propagators.TraceContext{}, propagators.Baggage{}))
+	otel.SetTextMapPropagator(propagation.NewCompositeTextMapPropagator(propagation.TraceContext{}, propagation.Baggage{}))
 	return flush
 }

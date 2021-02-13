@@ -3,19 +3,20 @@ package main
 import (
 	"context"
 	"fmt"
-	"google.golang.org/grpc/metadata"
 	"log"
 	"net"
 	"os"
 	"time"
+
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/trace"
+	"google.golang.org/grpc/metadata"
 
 	"github.com/go-redis/redis/extra/redisotel"
 	"github.com/go-redis/redis/v8"
 	"github.com/thanhnamit/shortenit/grpc-alias-provider-v1/internal/tracing"
 	pb "github.com/thanhnamit/shortenit/grpc-alias-provider-v1/proto/alias/v1"
 	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
-	"go.opentelemetry.io/otel/api/global"
-	"go.opentelemetry.io/otel/api/trace"
 	"go.opentelemetry.io/otel/label"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
@@ -27,7 +28,7 @@ const (
 	availableAliasSet = "available_alias_set"
 	usedAliasSet      = "used_alias_set"
 	appName           = "grpc-alias-provider-v1"
-	redisHost		  = "localhost:6379"
+	redisHost         = "localhost:6379"
 )
 
 // aliasProviderServer ...
@@ -46,18 +47,18 @@ func (s *server) GetNewAlias(ctx context.Context, in *pb.GetNewAliasRequest) (*p
 	span := trace.SpanFromContext(ctx)
 	log.Printf("Current span info: traceId: %s, spanId: %s\n", span.SpanContext().TraceID.String(), span.SpanContext().SpanID.String())
 	// create a new child span
-	ctx, span = global.Tracer(appName).Start(ctx, "GetNewAlias")
+	ctx, span = otel.Tracer(appName).Start(ctx, "GetNewAlias")
 	defer span.End()
 
 	span.SetAttributes(label.String("redis.operation", "SPop"))
 	keyRes := s.rclient.SPop(ctx, availableAliasSet)
 	key, err := keyRes.Result()
 	if err != nil {
-		span.AddEvent(ctx, "redis.error", label.String("message", err.Error()))
+		span.AddEvent("redis.error", trace.WithAttributes(label.String("message", err.Error())))
 		log.Fatalf("Failed to get key from keydb: %v", err)
 	}
 
-	span.AddEvent(ctx, "redis.ok", label.String("key", key))
+	span.AddEvent("redis.ok", trace.WithAttributes(label.String("key", key)))
 
 	return &pb.GetNewAliasResponse{
 		Alias:     key,
