@@ -11,6 +11,8 @@ import (
 	"go.opentelemetry.io/contrib/instrumentation/github.com/Shopify/sarama/otelsarama"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/codes"
+	"go.opentelemetry.io/otel/label"
+	"go.opentelemetry.io/otel/metric"
 )
 
 type KafkaProducer struct {
@@ -19,6 +21,7 @@ type KafkaProducer struct {
 }
 
 func (ep KafkaProducer) Publish(ctx context.Context, event core.GetUrlEvent, topic string) {
+	meter := otel.Meter("api-shortenit-v1")
 	tr := otel.Tracer(ep.cfg.TracerName)
 	_, span := tr.Start(ctx, "kafka.producer.Publish")
 	defer span.End()
@@ -38,12 +41,19 @@ func (ep KafkaProducer) Publish(ctx context.Context, event core.GetUrlEvent, top
 	ep.producer.Input() <- &msg
 	successMsg := <-ep.producer.Successes()
 	log.Println("Published with offset: ", successMsg.Offset)
+	recordEventPublished(meter, ctx, GetTag(ep.cfg))
+
 
 	err := ep.producer.Close()
 	if err != nil {
 		span.SetStatus(codes.Error, err.Error())
 		log.Fatalln("Error closing producer: ", err)
 	}
+}
+
+func recordEventPublished(meter metric.Meter, ctx context.Context, l *label.KeyValue) {
+	upDownCounter := metric.Must(meter).NewInt64UpDownCounter("api-shortenit-v1.kafka-queue-size")
+	upDownCounter.Add(ctx, 1, *l)
 }
 
 func NewKafkaProducer(config *config.Config) KafkaProducer {

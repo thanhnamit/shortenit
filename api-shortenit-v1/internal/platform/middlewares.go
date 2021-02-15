@@ -4,8 +4,12 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"time"
 
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/label"
+	"go.opentelemetry.io/otel/metric"
 )
 
 const (
@@ -16,7 +20,7 @@ const (
 type ContextKey string
 
 func NewGlobalHandler(handler http.Handler, operation string) func(w http.ResponseWriter, r *http.Request) {
-	return toHandlerFunc(withCORS(withAPIKey(otelhttp.NewHandler(handler, operation))))
+	return toHandlerFunc(withCORS(withAPIKey(otelhttp.NewHandler(handler, operation))), operation)
 }
 
 func NewHealthHandler() func(w http.ResponseWriter, r *http.Request) {
@@ -26,10 +30,20 @@ func NewHealthHandler() func(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func toHandlerFunc(next http.Handler) func(w http.ResponseWriter, r *http.Request) {
+func toHandlerFunc(next http.Handler, operation string) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		ctx := context.WithValue(r.Context(), ContextKey(CtxBasePath), fmt.Sprintf("http://%s%s", r.Host, r.URL.Path))
+		meter := otel.Meter("api-shortenit-v1")
+		requestStartTime := time.Now()
+
+		path := fmt.Sprintf("http://%s%s", r.Host, r.URL.Path)
+		ctx := context.WithValue(r.Context(), ContextKey(CtxBasePath), path)
 		next.ServeHTTP(w, r.WithContext(ctx))
+
+		elapsedTime := time.Since(requestStartTime).Microseconds()
+		recorder := metric.Must(meter).NewInt64ValueRecorder("api-shortenit-v1.latency")
+
+		labels := []label.KeyValue{label.String("operation", operation), label.String("http-method", r.Method)}
+		recorder.Record(r.Context(), elapsedTime, labels...)
 	}
 }
 

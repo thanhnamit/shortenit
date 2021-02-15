@@ -17,6 +17,7 @@ type Config struct {
 	Port           string
 	BrokerList     []string
 	GetUrlTopic    string
+	CommitSHA      string
 }
 
 func NewAppConfig() *Config {
@@ -35,5 +36,6 @@ func NewAppConfig() *Config {
 		Port:           os.Getenv("PORT"),
 		BrokerList:     strings.Split(os.Getenv("KAFKA_PEERS"), ","),
 		GetUrlTopic:    os.Getenv("GETURL_EVENT_TOPIC"),
+		CommitSHA:		os.Getenv("COMMIT"),
 	}
 }

@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+	"github.com/thanhnamit/shortenit/api-shortenit-v1/internal/config"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/label"
@@ -32,7 +33,7 @@ func CreateAliasHandler(s *Server) http.Handler {
 			return
 		}
 
-		recordMetrics(meter, r, req)
+		recordRequestSize(meter, r, req, GetTag(s.cfg))
 
 		res, err := svc.GetNewAlias(r.Context(), req)
 		if err != nil {
@@ -64,9 +65,16 @@ func GetUrlHandler(s *Server) http.Handler {
 	})
 }
 
-func recordMetrics(meter metric.Meter, r *http.Request, req core.ShortenURLRequest) {
+func GetTag(cfg *config.Config) *label.KeyValue {
+	return &label.KeyValue{
+		Key:   "api-shortenit-v1-commit-id",
+		Value: label.StringValue(cfg.CommitSHA),
+	}
+}
+
+func recordRequestSize(meter metric.Meter, r *http.Request, req core.ShortenURLRequest, label *label.KeyValue) {
 	counter := metric.Must(meter).NewInt64Counter("api-shortenit-v1.create-alias.request-size.total")
-	meter.RecordBatch(r.Context(), []label.KeyValue{}, counter.Measurement(req.Size()))
+	counter.Add(r.Context(), req.Size(), *label)
 }
 
 func newCoreService(s *Server) core.Service {
@@ -87,6 +95,21 @@ func InitSampleHandler(s *Server) func(w http.ResponseWriter, r *http.Request) {
 			Email:     "john.d@gmail.com",
 			CreatedAt: time.Now(),
 		})
+
+		s.userRepo.CreateUser(r.Context(), &core.User{
+			ID:        primitive.NewObjectID(),
+			Name:      "Foo Bar",
+			Email:     "foo.bar@gmail.com",
+			CreatedAt: time.Now(),
+		})
+
+		s.userRepo.CreateUser(r.Context(), &core.User{
+			ID:        primitive.NewObjectID(),
+			Name:      "Tony Tr",
+			Email:     "tony@gmail.com",
+			CreatedAt: time.Now(),
+		})
+
 		w.Write([]byte("Done"))
 	}
 }

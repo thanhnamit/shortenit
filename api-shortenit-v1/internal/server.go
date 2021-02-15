@@ -41,6 +41,7 @@ func (s *Server) Start() {
 	}()
 
 	log.Printf("Listening on %s...\n", s.cfg.Port)
+	log.Printf("CommitSHA %s...\n", s.cfg.CommitSHA)
 
 	s.WaitForInterruptSignal(httpSvc)
 }
