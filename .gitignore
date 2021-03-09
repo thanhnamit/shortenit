@@ -33,6 +33,8 @@
 
 /asciidoc/
 /data/
-
+/img/
+SCRIPT.md
+SLIDE.md
 
 # End of https://www.toptal.com/developers/gitignore/api/go,vscode

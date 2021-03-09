@@ -2,16 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="00853d05-b579-41d4-9775-31acdc2d9aea" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../api-shortenit-v1/.env" beforeDir="false" afterPath="$PROJECT_DIR$/../api-shortenit-v1/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../api-shortenit-v1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../api-shortenit-v1/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api-shortenit-v1/internal/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/../api-shortenit-v1/internal/config/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api-shortenit-v1/internal/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/../api-shortenit-v1/internal/handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api-shortenit-v1/internal/kafka_consumer.go" beforeDir="false" afterPath="$PROJECT_DIR$/../api-shortenit-v1/internal/kafka_consumer.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api-shortenit-v1/internal/kafka_producer.go" beforeDir="false" afterPath="$PROJECT_DIR$/../api-shortenit-v1/internal/kafka_producer.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../api-shortenit-v1/internal/platform/metering.go" beforeDir="false" afterPath="$PROJECT_DIR$/../api-shortenit-v1/internal/platform/metering.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api-shortenit-v1/internal/platform/middlewares.go" beforeDir="false" afterPath="$PROJECT_DIR$/../api-shortenit-v1/internal/platform/middlewares.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api-shortenit-v1/internal/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/../api-shortenit-v1/internal/server.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

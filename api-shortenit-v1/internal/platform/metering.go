@@ -15,7 +15,7 @@ import (
 func InitMeter() {
 	exporter, err := prometheus.InstallNewPipeline(
 		prometheus.Config{
-			DefaultHistogramBoundaries: []float64{8000.00, 10000.00, 13000.00, 16000.00, 20000.00, 30000.00},
+			DefaultHistogramBoundaries: []float64{8000.00, 10000.00, 13000.00, 16000.00},
 		},
 	)
 	if err != nil {
